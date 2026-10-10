@@ -1,8 +1,10 @@
 buildscript {
     ext {
-        buildToolsVersion = "37.0.0"
+        // SDK 36 instead of the template's 37: Android Studio 2025.3 does not
+        // recognise the android-37 platform (see the AGP note below).
+        buildToolsVersion = "36.1.0"
         minSdkVersion = 24
-        compileSdkVersion = 37
+        compileSdkVersion = 36
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.2.0"
@@ -10,6 +12,12 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+    }
+    // React Native 0.87 defaults to AGP 9.2.1, which needs a newer Android Studio
+    // than 2025.3 (max AGP 9.1.0). Forcing 9.1.0 keeps the project openable in
+    // Android Studio 2025.3; remove this block after upgrading Android Studio.
+    configurations.classpath {
+        resolutionStrategy.force("com.android.tools.build:gradle:9.1.0")
     }
     dependencies {
         classpath("com.android.tools.build:gradle")

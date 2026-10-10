@@ -62,7 +62,7 @@ SalonBooking/
 | Node.js | ≥ 22.11 (developed on 24.x) |
 | PostgreSQL | 14+ (developed on 17) |
 | JDK | 17–21 (Android Studio's bundled JBR works) |
-| Android Studio + SDK | API 36 platform, an emulator or a USB-debuggable device |
+| Android Studio + SDK | 2025.3 or newer, API 36 platform, an emulator or a USB-debuggable device |
 
 Install PostgreSQL on macOS, if needed:
 
@@ -221,6 +221,10 @@ npm run android              # builds, installs and launches the app
 
 **Android Studio:** *File → Open → `SalonBooking/mobile/android`*, let Gradle sync, keep
 `npm start` running, then press ▶ Run. Gradle needs JDK 17–21; Android Studio's bundled JDK works.
+For compatibility with Android Studio 2025.3, the project pins the Android Gradle Plugin to
+9.1.0 and compiles against SDK 36 (React Native 0.87 defaults to AGP 9.2.1 and SDK 37). The
+Gradle build also finds Node.js when Android Studio is launched from the Dock, where the
+shell `PATH` is not available (`android/app/build.gradle`, `NODE_BINARY` overrides it).
 
 **Which URL does the app call?** The URL is set in [`mobile/src/config/env.ts`](mobile/src/config/env.ts).
 In development the app calls `http://localhost:5000`, and `adb reverse` forwards that port from the
